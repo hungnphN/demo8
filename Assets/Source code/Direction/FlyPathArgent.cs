@@ -16,7 +16,12 @@ public class FlyPathArgent : MonoBehaviour
     {
         if (!isReady || flyPath == null) return;
         if (flyPath == null) return;
-        if (nextIndex >= flyPath.waypoints.Length) return;
+        if (nextIndex >= flyPath.waypoints.Length)
+        {
+            Destroy(gameObject);
+            return;
+        } 
+        
         if(transform.position != flyPath[nextIndex])
         {
             FlyToNextWaypoint();
