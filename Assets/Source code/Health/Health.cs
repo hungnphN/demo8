@@ -45,12 +45,10 @@ public class Health : MonoBehaviour
         {
             var explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
             explosion.transform.localScale = new Vector3(0.5f, 0.5f, 1f); 
-
             Destroy(explosion, 1f);
             Destroy(gameObject);
-            onDead?.Invoke();
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
+        onDead?.Invoke();
     }
 }

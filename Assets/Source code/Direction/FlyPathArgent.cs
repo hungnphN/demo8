@@ -8,6 +8,7 @@ public class FlyPathArgent : MonoBehaviour
     public float flySpeed;
     public int nextIndex = 1;
     public bool isReady = false;
+    public bool isBoss = false;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -17,8 +18,14 @@ public class FlyPathArgent : MonoBehaviour
         if (!isReady || flyPath == null) return;
         if (flyPath == null) return;
         if (nextIndex >= flyPath.waypoints.Length)
-        {
-            Destroy(gameObject);
+        { if(!isBoss)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Boss da den cuoi duong va dang cho bi tieu diet");
+            }
             return;
         } 
         

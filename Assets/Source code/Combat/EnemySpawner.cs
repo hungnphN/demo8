@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public FlyPath bossFlyPath;
     public float bossSpeed = 2f;
     public float delayBeforeBoss = 2f;
+    public BattleFlow flow;
 
 
     // Start is called before the first frame update
@@ -54,16 +55,34 @@ public class EnemySpawner : MonoBehaviour
     {
         if (bossPrefab == null || bossFlyPath == null)
         {
-            Debug.LogWarning("Boss Prefab or flypath chua doc gan!");
+            Debug.LogWarning("❌ Boss prefab hoặc flyPath chưa được gán!");
             return;
         }
+
+        // Spawn boss tại vị trí waypoint đầu tiên
         Vector3 startPos = bossFlyPath.waypoints[0].transform.position;
         var boss = Instantiate(bossPrefab, startPos, Quaternion.identity);
+
+        // Lấy component điều khiển bay
         var agent = boss.GetComponent<FlyPathArgent>();
         agent.flyPath = bossFlyPath;
         agent.flySpeed = bossSpeed;
         agent.isReady = true;
-        Debug.Log("Boss Spawned");
+        agent.isBoss = true;
+
+        Debug.Log("✔ Boss Spawned!");
+
+        // GÁN flow.OnGameWin khi boss chết
+        var bossHealth = boss.GetComponent<Health>();
+
+        if (flow == null)
+        {
+            Debug.LogError("❌ flow (BattleFlow) chưa được gán trong Inspector!");
+        }
+        else
+        {
+            bossHealth.onDead += flow.OnGameWin;
+        }
     }
     // Update is called once per frame
     void Update()

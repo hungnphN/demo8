@@ -34,10 +34,17 @@ public class BattleFlow : MonoBehaviour
     //        OnGameWin();
     //    }
     //}
-    private void OnGameWin()
+    public void OnGameWin()
     {
         if (hasWon) return;
         hasWon = true;
+        gamewinUI.SetActive(true);
+        bgMusic.SetActive(false);
+        playerHealth.gameObject.SetActive(false);
+    }
+    public void OnbossDead()
+    {
+        Debug.Log("Boss is dead , you win");
         gamewinUI.SetActive(true);
         bgMusic.SetActive(false);
         playerHealth.gameObject.SetActive(false);
