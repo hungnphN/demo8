@@ -32,8 +32,12 @@ public class FlyPathArgent : MonoBehaviour
         if(transform.position != flyPath[nextIndex])
         {
             FlyToNextWaypoint();
-            lookAt(flyPath[nextIndex]);
-        }
+            if (!isBoss)
+            {
+                lookAt(flyPath[nextIndex]);
+            }
+        }    
+            
         else
         {
             nextIndex++;
@@ -49,7 +53,8 @@ public class FlyPathArgent : MonoBehaviour
         var lookDirection = destination - position;
         if (lookDirection.magnitude < 0.01f) return;
         var angle = Vector2.SignedAngle(Vector3.down, lookDirection);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360f * Time.deltaTime);
     }
 }
 

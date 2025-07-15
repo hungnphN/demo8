@@ -13,7 +13,12 @@ public class EnemyAttack : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);
-            health.TakeDamage(1000);
+            var agent = GetComponent<FlyPathArgent>();
+            if (agent != null && !agent.isBoss)
+            {
+                health.TakeDamage(1000);
+            }
+           
         }
     }
 }
